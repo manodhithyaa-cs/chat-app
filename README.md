@@ -4,3 +4,4 @@
 # ->npm i nodemon -d
 # ->npm i express cors body-parser
 # ->npm i socket.io
+# ->npm i firebase
