@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Chat App</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    </head>
+    <style>
+        #email-message,
+        #password-message {
+            color: red;
+        }
+
+        form {
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 10rem;
+        }
+
+        form {
+            padding: 1rem;
+            /* border: 1px solid rgba(0,0,0,0.5); */
+            box-shadow: 0 0px 20px rgba(0,0,0,0.5);
+            /* 0 5px 5px rgba(0,0,0,0.5) inset; */
+        }
+    </style>
+    <body>
+        <main class="container">
+            <form class="w-50" autocomplete="off">
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" name="email" id="floatingInput" placeholder="name@example.com" />
+                    <label for="floatingInput">Email address</label>
+                    <span id="email-message" class="mb-3"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="Password" />
+                    <label for="floatingPassword">Password</label>
+                    <span id="password-message" class="mb-3"></span>
+                </div>
+                <label class="mb-3">Forgot Password <a href="#">Reset it</a></label>
+                <button class="btn btn-primary w-100 fs-4 mb-3" id="login-btn">Login</button>
+                <label class="mb-3">Didn't create an account? <a href="#">Sign Up</a></label>
+            </form>
+        </main>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            const socket = io();
+            const email_message = document.getElementById("email-message")
+            const password_message = document.getElementById("password-message")
+            const email_field = document.getElementById("floatingInput")
+            const password_field = document.getElementById("floatingPassword")
+            const login_btn = document.getElementById("login-btn")
+
+            login_btn.addEventListener("click", (event) => {
+                const email = email_field.value
+                const password = password_field.value
+
+                var error_status = true
+
+                event.preventDefault()
+
+                email_message.textContent = ""
+                password_message.textContent = ""
+
+                if (!email) {
+                    email_message.textContent += "Email - ID is required!"
+                } else if (!email.includes("@")) {
+                    email_message.textContent += "Email - ID is invalid"
+                } else {
+                    error_status = false
+                }
+
+                if (!password) {
+                    password_message.textContent += "Password is required"
+                } else if (password.length < 6) {
+                    password_message.textContent += "Password cannot be less than 6 characters"
+                } else {
+                    error_status = false
+                }
+
+                $.post("/", { email: email, password: password }, (data, status, xhr) => {
+                    console.log("Response Data:", data); // This should log the JSON object directly
+
+                    if (data) {
+                        console.log(`Data: ${data.message}`);
+                        console.log(data.email);
+                        console.log(data.password);
+                        localStorage.setItem("userData", JSON.stringify(data));
+                        // setTimeout(() => window.location.href = ``, 2000);
+                    }
+                });
+            })
+        </script>
+    </body>
+</html>
