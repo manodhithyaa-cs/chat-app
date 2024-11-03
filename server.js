@@ -34,11 +34,11 @@ app.post("/", (req, res) => {
     userData.email = email
     userData.password = password
     res.setHeader("Content-Type", "application/json")
-    res.json({
+    res.send(json({
         message: "User data received",
         email: userData.email,
         password: userData.password
-    });
+    }))
     console.log(userData) 
 })
 
