@@ -81,17 +81,19 @@
                     error_status = false
                 }
 
-                $.post("/", { email: email, password: password }, (data, status, xhr) => {
-                    console.log("Response Data:", data); // This should log the JSON object directly
+                if (!error_status) {
+                    $.post("/", { email: email, password: password }, (data, status, xhr) => {
+                        console.log("Response Data:", data); // This should log the JSON object directly
 
-                    if (data) {
-                        console.log(`Data: ${data.message}`);
-                        console.log(data.email);
-                        console.log(data.password);
-                        localStorage.setItem("userData", JSON.stringify(data));
-                        // setTimeout(() => window.location.href = ``, 2000);
-                    }
-                });
+                        if (data) {
+                            console.log(`Data: ${data.message}`);
+                            console.log(data.email);
+                            console.log(data.password);
+                            localStorage.setItem("userData", JSON.stringify(data));
+                            // setTimeout(() => window.location.href = ``, 2000);
+                        }
+                    });
+                }
             })
         </script>
     </body>
