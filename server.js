@@ -50,4 +50,4 @@ io.on("connection", (socket) => {
     })
 })
 
-server.listen(port, () => console.log(`Server running on port: ${port}`))
+server.listen(port, (err) => err ? console.log(`Error: ${err}`) : console.log(`Server running on port: ${port}`));
