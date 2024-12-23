@@ -25,6 +25,10 @@ const userData = {
     "password": null,
 }
 
+app.get("/login", (req, res) => {
+    res.sendFile(join(__dirname, "template/login.html"))
+})
+
 app.get("/", cors(corsOption), (req, res, next) => {
     res.sendFile(join(__dirname, "template/index.html"))
 })
