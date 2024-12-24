@@ -29,6 +29,10 @@ app.get("/login", (req, res) => {
     res.sendFile(join(__dirname, "template/login.html"))
 })
 
+app.get("/signup", (req, res) => {
+    res.sendFile(join(__dirname, "template/signup.html"))
+})
+
 app.get("/", cors(corsOption), (req, res, next) => {
     res.sendFile(join(__dirname, "template/index.html"))
 })
